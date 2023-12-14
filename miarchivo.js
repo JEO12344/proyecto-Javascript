@@ -4,45 +4,63 @@ function Pizza(nombre, precio, ingredientes) {
     this.ingredientes = ingredientes;
 }
 
-function sumarTotal(pedidos) {
-    let total = 0;
-    for (let i = 0; i < pedidos.length; i++) {
-        total += pedidos[i].precio;
-    }
-    return total;
+function Orden(pizza, cantidad) {
+    this.pizza = pizza;
+    this.cantidad = cantidad;
 }
 
-let pizzaSimple = new Pizza("Pizza simple", 2500, ["salsa y queso"]);
-let pizzaEspecial = new Pizza("Pizza especial", 2800, ["salsa", "queso", "jamón", "aceitunas", "sardinas"]);
-let pizzaCalabresa = new Pizza("Pizza calabresa", 3000, ["salsa", "queso", "salame"]);
+let PizzaMorrones = new Pizza("Pizza de morrones", 4500, ["salsa", "queso", "morrones"]);
+let PizzaRucula = new Pizza("Pizza de rucula", 5000, ["salsa", "queso", "rucula"]);
+let PizzaEspecial = new Pizza("Pizza especial", 4500, ["salsa", "queso muzarella", "aceitunas", "tomates", "jamon"]);
+let PizzaClasica = new Pizza("Pizza clasica", 3500, ["salsa", "queso"]);
+let PizzaAceitunas = new Pizza("Pizza con aceitunas", 4000, ["salsa", "queso", "aceitunas"]);
+let Pizza4Quesos = new Pizza("Pizza 4 quesos", 5500, ["salsa", "queso roquefort", "queso parmesano", "queso mozzarella", "queso crema"]);
 
-let menuPizzas = [pizzaSimple, pizzaEspecial, pizzaCalabresa];
-alert("Bienvenido/a. Por favor, elija una opción de pizza:");
-
+let menuPizzas = [PizzaMorrones, PizzaRucula, PizzaEspecial, PizzaClasica, PizzaAceitunas, Pizza4Quesos];
 let pedidos = [];
 
-while (true) {
-    let mostrarOpciones = "Menú de Pizzas:\n";
+let menuContainer = document.getElementById('menu-container');
+
+let ordenContainer = document.getElementById('orden-container');
+
+let totalContainer = document.getElementById('total-container');
+
+mostrarMenu();
+
+function mostrarMenu() {
+    menuContainer.innerHTML = "<h2>Menú de Pizzas:</h2>";
     for (let i = 0; i < menuPizzas.length; i++) {
-        mostrarOpciones += `${i + 1}. ${menuPizzas[i].nombre}\n`;
-    }
-
-    let pedirPizza = prompt(mostrarOpciones + "Seleccione una opción (1, 2 o 3):");
-
-    if (pedirPizza >= 1 && pedirPizza <= 3) {
-        let pizzaSeleccionada = menuPizzas[pedirPizza - 1];
-        alert(`Ha seleccionado ${pizzaSeleccionada.nombre}. ¡Gracias por su pedido!\nTotal a pagar: ${pizzaSeleccionada.precio} pesos.`);
-
-        pedidos.push(pizzaSeleccionada);
-
-        let pedirMas = confirm("¿Desea pedir algo más?");
-        if (!pedirMas) {
-            break;
-        }
-    } else {
-        alert("Opción no válida. Por favor, elija una opción válida (1, 2 o 3).");
-        continue; 
+        let pizzaOption = document.createElement('button');
+        pizzaOption.textContent = `${menuPizzas[i].nombre} - ${menuPizzas[i].precio} pesos`;
+        pizzaOption.addEventListener('click', () => {
+            agregarPedido(menuPizzas[i]);
+        });
+        menuContainer.appendChild(pizzaOption);
     }
 }
 
-alert("Gracias por su pedido. El total a pagar es: " + sumarTotal(pedidos) + " pesos.");
+function agregarPedido(pizza) {
+    let ordenExistente = pedidos.find(item => item.pizza.nombre === pizza.nombre);
+    if (ordenExistente) {
+        ordenExistente.cantidad += 1;
+    } else {
+        let nuevaOrden = new Orden(pizza, 1);
+        pedidos.push(nuevaOrden);
+    }
+    mostrarOrden();
+    mostrarTotal();
+}
+
+function mostrarOrden() {
+    ordenContainer.innerHTML = "<h2>Tu Orden:</h2>";
+    for (let i = 0; i < pedidos.length; i++) {
+        let ordenItem = document.createElement('p');
+        ordenItem.textContent = `${pedidos[i].cantidad} x ${pedidos[i].pizza.nombre} - ${pedidos[i].pizza.precio * pedidos[i].cantidad} pesos`;
+        ordenContainer.appendChild(ordenItem);
+    }
+}
+
+function mostrarTotal() {
+    let total = pedidos.reduce((acc, item) => acc + item.pizza.precio * item.cantidad, 0);
+    totalContainer.textContent = total;
+}

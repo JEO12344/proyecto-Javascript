@@ -1,11 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pizzeria</title>
+  <link rel="stylesheet" href="estilos.css" />
 </head>
+
 <body>
-<script src="./miarchivo.js"></script>
+  <header>
+    <div class="portada">
+      <img src="./imagenes/flash.png" alt="" class="logo" />
+      <p>Sabor Veloz</p>
+    </div>
+  </header>
+  <main>
+    <section class="menu">
+      <h1>Menú</h1>
+      <div class="tarjeta">
+        <div class="imagen">
+          <img src="./imagenes/pizza de morrones.jpg" alt="" />
+        </div>
+        <p>Pizza de Morrones</p>
+      </div>
+      <div class="tarjeta">
+        <div class="imagen">
+          <img src="./imagenes/pizza de rucula.jpg" alt="" />
+        </div>
+        <p>Pizza de Rúcula</p>
+      </div>
+      <div class="tarjeta">
+        <div class="imagen">
+          <img src="./imagenes/pizza especial.jpg" alt="" />
+        </div>
+        <p>Pizza Especial</p>
+      </div>
+      <div class="tarjeta">
+        <div class="imagen">
+          <img src="./imagenes/pizza.jpg" alt="" />
+        </div>
+        <p>Pizza Clásica</p>
+      </div>
+      <div class="tarjeta">
+        <div class="imagen">
+          <img src="./imagenes/pizza2.jpg" alt="" />
+        </div>
+        <p>Pizza con aceitunas</p>
+      </div>
+      <div class="tarjeta">
+        <div class="imagen">
+          <img src=".//imagenes/pizza3.jpg" alt="" />
+        </div>
+        <p>Pizza 4 quesos</p>
+      </div>
+      <div class="Mensaje">
+        <div id="menu-container"></div>
+        <div id="orden-container"></div>
+        <p>Total a pagar: <span id="total-container">0</span> pesos.</p>
+      </div>
+    </section>
+  </main>
+  <script src="./miarchivo.js"></script>
 </body>
 </html>
