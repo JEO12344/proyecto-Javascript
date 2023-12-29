@@ -9,23 +9,20 @@ function Orden(pizza, cantidad) {
     this.cantidad = cantidad;
 }
 
-let PizzaMorrones = new Pizza("Pizza de morrones", 4500, ["salsa", "queso", "morrones"]);
-let PizzaRucula = new Pizza("Pizza de rucula", 5000, ["salsa", "queso", "rucula"]);
-let PizzaEspecial = new Pizza("Pizza especial", 4500, ["salsa", "queso muzarella", "aceitunas", "tomates", "jamon"]);
-let PizzaClasica = new Pizza("Pizza clasica", 3500, ["salsa", "queso"]);
-let PizzaAceitunas = new Pizza("Pizza con aceitunas", 4000, ["salsa", "queso", "aceitunas"]);
-let Pizza4Quesos = new Pizza("Pizza 4 quesos", 5500, ["salsa", "queso roquefort", "queso parmesano", "queso mozzarella", "queso crema"]);
-
-let menuPizzas = [PizzaMorrones, PizzaRucula, PizzaEspecial, PizzaClasica, PizzaAceitunas, Pizza4Quesos];
+let menuPizzas = [];
 let pedidos = [];
 
 let menuContainer = document.getElementById('menu-container');
-
 let ordenContainer = document.getElementById('orden-container');
-
 let totalContainer = document.getElementById('total-container');
 
-mostrarMenu();
+fetch('menuPizzas.json')
+    .then(response => response.json())
+    .then(data => {
+        menuPizzas = data;
+        mostrarMenu(); 
+    })
+    .catch(error => console.error('Error cargando el menú:', error));
 
 function mostrarMenu() {
     menuContainer.innerHTML = "<h2>Menú de Pizzas:</h2>";
@@ -64,3 +61,45 @@ function mostrarTotal() {
     let total = pedidos.reduce((acc, item) => acc + item.pizza.precio * item.cantidad, 0);
     totalContainer.textContent = total;
 }
+let borrarOrdenButton = document.getElementById('borrar-orden');
+borrarOrdenButton.addEventListener('click', borrarOrden);
+
+function borrarOrden() {
+    pedidos = [];
+    mostrarOrden();
+    mostrarTotal();
+}
+let confirmarOrdenButton = document.getElementById('confirmar-orden');
+confirmarOrdenButton.addEventListener('click', confirmarOrden);
+
+function confirmarOrden() {
+    mostrarAgradecimiento();
+}
+
+function mostrarAgradecimiento() {
+    return new Promise((resolve, reject) => {
+        swal({
+            title: "¿Estás seguro/a de las opciones seleccionadas?",
+            text: "Una vez confirmado tu pedido empezará a prepararse",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Tu pedido ha sido confirmado. Estará listo en breve.", {
+                    icon: "success",
+                })
+                .then(() => {
+                    setTimeout(() => {
+                        resolve('Tu pizza está lista. Puedes pasar a retirarla.');
+                    }, 11000); 
+                });
+            } else {
+                swal("Tu pedido ha sido cancelado");
+                reject('Pedido cancelado');
+            }
+        });
+    });
+}
+

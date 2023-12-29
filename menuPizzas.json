@@ -1,0 +1,32 @@
+[
+    {
+        "nombre": "Pizza de morrones",
+        "precio":4500,
+        "ingredientes": ["salsa", "queso", "morrones"]
+    },
+    {
+        "nombre": "Pizza de rucula",
+        "precio": 5000,
+        "ingredientes": ["salsa", "queso", "rucula"]
+    },
+    {
+        "nombre": "Pizza especial",
+        "precio":4500,
+        "ingredientes": ["salsa", "queso muzarella", "aceitunas", "tomates", "jamon"]
+    },
+    {
+        "nombre": "Pizza clasica",
+        "precio":3500,
+        "ingredientes": ["salsa", "queso"]
+    },
+    {
+        "nombre": "Pizza con aceitunas",
+        "precio": 4000,
+        "ingredientes":  ["salsa", "queso", "aceitunas"]
+    },
+    {
+        "nombre": "Pizza 4 quesos",
+        "precio":5500,
+        "ingredientes": ["salsa", "queso roquefort", "queso parmesano", "queso mozzarella", "queso crema"]
+    } 
+]
